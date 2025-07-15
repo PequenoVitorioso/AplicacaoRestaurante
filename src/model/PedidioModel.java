@@ -7,10 +7,20 @@ package model;
 public class PedidioModel {
     private int idPedido;
     private int hora;
+    private int codCliente;
 
     public PedidioModel() {
         idPedido = 0;
         hora = 0;
+        codCliente = 0;
+    }
+
+    public int getCodCliente() {
+        return codCliente;
+    }
+
+    public void setCodCliente(int codCliente) {
+        this.codCliente = codCliente;
     }
 
     public int getIdPedido() {
