@@ -4,12 +4,12 @@ package model;
  *
  * @author paulo
  */
-public class PedidioModel {
+public class PedidoModel {
     private int idPedido;
     private int hora;
     private ClienteModel codCliente;
 
-    public PedidioModel() {
+    public PedidoModel() {
         idPedido = 0;
         hora = 0;
         codCliente = new ClienteModel();
