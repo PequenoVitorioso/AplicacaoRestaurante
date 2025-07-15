@@ -127,9 +127,11 @@ public class CaixaContoller {
             //RECUPERAR DADOS DO BANCO
             while(result.next()){
                 CaixaModel caixa = new CaixaModel();
-                caixa.setIdMateriaPrima(result.getInt("idMateriaPrima"));
-                caixa.setNome(result.getString("nome"));
-                caixa.setCustoPorKG(result.getFloat("custoPorKG"));
+                caixa.setNumNotaFiscal(result.getInt("numNotaFiscal"));
+                caixa.setFormPagamento(result.getString("formPagamento"));
+                caixa.setValorTotal(result.getFloat("valorTotal"));
+                caixa.setData(result.getDate("data"));
+                retorno.add(caixa);
             }            
         }catch(SQLException  e){
             System.out.println("Erro na seleção: "+ e.getMessage());

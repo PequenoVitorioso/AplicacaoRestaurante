@@ -139,7 +139,21 @@ public class RefeicaoController {
         return retorno;
     }
     
-    
-    
-    //ADICIONAR SELECIONAR ULTIMO
+    public int selecionarUltimoId() {
+        int retorno = 0;
+        Conexao c = new Conexao();
+        c.conectar();
+        String sql = "select max(idRefeicao) as ultimo from refeicao";
+        try{
+            PreparedStatement sentenca = c.conector.prepareStatement(sql);
+            ResultSet result = sentenca.executeQuery();
+            if(result.next()){
+                retorno = result.getInt("ultimo");
+            }
+        }catch(SQLException  e){
+            System.out.println("Erro na seleção: "+ e.getMessage());
+        }
+        c.desconectar();
+        return retorno;
+    }
 }
