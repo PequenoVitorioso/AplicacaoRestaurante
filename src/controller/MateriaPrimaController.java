@@ -128,6 +128,7 @@ public class MateriaPrimaController {
                 MP.setIdMateriaPrima(result.getInt("idMateriaPrima"));
                 MP.setNome(result.getString("nome"));
                 MP.setCustoPorKG(result.getFloat("custoPorKG"));
+                retorno.add(MP);
             }            
         }catch(SQLException  e){
             System.out.println("Erro na seleção: "+ e.getMessage());

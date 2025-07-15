@@ -4,28 +4,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import model.MateriaPrimaModel;
-import model.RefeicaoModel;
+import model.CaixaModel;
 import util.Conexao;
 
 /**
  *
  * @author paulo
  */
-public class RefeicaoController {
-    
-    public boolean inserir(RefeicaoModel refeicao){
+public class CaixaContoller {
+    public boolean inserir(CaixaModel caixa){
         boolean retorno = false;
         //CONECTAR COM O BANCO
         Conexao c = new Conexao();
         c.conectar();
         //CRIAR SQL INSERT
-        String sql = "insert into refeicao (nome, valor) values (?,?)";
+        String sql = "insert into caixa (valorTotal, data, formPagamento) values (?,?,?)";
         try {
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             //PASSAR PARAMETROS
-            sentenca.setString(1, refeicao.getNome());
-            sentenca.setFloat(2, refeicao.getValor());
+            sentenca.setFloat(1, caixa.getValorTotal());
+            sentenca.setString(2, caixa.toStringDataVenda());
+            sentenca.setString(3, caixa.getFormPagamento());
             //EXECUTAR SENTENCA
             if (!sentenca.execute()) {
                 retorno = true;
@@ -38,19 +37,20 @@ public class RefeicaoController {
         return retorno;
     }
     
-    public boolean editar(RefeicaoModel refeicao){
+    public boolean editar(CaixaModel caixa){
         boolean retorno = false;
         //CONECTAR COM O BANCO
         Conexao c = new Conexao();
         c.conectar();
         //CRIAR SQL UPDATE
-        String sql = "update refeicao set nome = ?, valor = ? where idRefeicao = ?";
+        String sql = "update caixa set valorTotal = ?, data = ?, formPagamento = ? where numNotaFiscal = ?";
         try {
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             //PASSAR PARAMETROS
-            sentenca.setString(1, refeicao.getNome());
-            sentenca.setFloat(2, refeicao.getvalor());
-            sentenca.setInt(3, refeicao.getIdRefeicao());
+            sentenca.setFloat(1, caixa.getValorTotal());
+            sentenca.setString(2, caixa.toStringDataVenda());
+            sentenca.setString(3, caixa.getFormPagamento());
+            sentenca.setInt(4, caixa.getNumNotaFiscal());
             //EXECUTAR SENTENCA
             if (!sentenca.execute()) {
                 retorno = true;
@@ -63,17 +63,17 @@ public class RefeicaoController {
         return retorno;
     }
     
-    public boolean excluir(RefeicaoModel refeicao){
+    public boolean excluir(CaixaModel caixa){
         boolean retorno = false;
         //CONECTAR COM O BANCO
         Conexao c = new Conexao();
         c.conectar();
         //CRIAR SQL DELETE
-        String sql = "delete from refeicao where idRefeicao = ?";
+        String sql = "delete from caixa where numNotaFiscal = ?";
         try {
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             //PASSAR PARAMETROS
-            sentenca.setInt(1, refeicao.getIdRefeicao());
+            sentenca.setInt(1, caixa.getNumNotaFiscal());
             //EXECUTAR SENTENCA
             if (!sentenca.execute()) {
                 retorno = true;
@@ -84,26 +84,27 @@ public class RefeicaoController {
         //DESCONECTAR
         c.desconectar();
         return retorno;
-    }
+    } 
     
-    public RefeicaoModel selecionar(RefeicaoModel refeicao){
-        RefeicaoModel retorno = null;
+    public CaixaModel selecionar(CaixaModel caixa){
+        CaixaModel retorno = null;
         //CONECTAR COM O BANCO
         Conexao c = new Conexao();
         c.conectar();
         //CRIAR SQL SELECT
-        String sql = "select * from refeicao where idRefeicao = ?";
+        String sql = "select * from caixa where numNotaFiscal = ?";
         try {
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             //PASSAR PARAMETROS
-            sentenca.setInt(1, refeicao.getIdRefeicao());
+            sentenca.setInt(1, caixa.getNumNotaFiscal());
             ResultSet result = sentenca.executeQuery();
             if(result.next()){
                 //RECUPERAR DADOS DO BANCO
-                retorno = new RefeicaoModel();
-                retorno.setIdRefeicao(result.getInt("idRefeicao"));
-                retorno.setNome(result.getString("nome"));
-                retorno.setValor(result.getFloat("valor"));
+                retorno = new CaixaModel();
+                retorno.setNumNotaFiscal(result.getInt("numNotaFiscal"));
+                retorno.setFormPagamento(result.getString("formPagamento"));
+                retorno.setValorTotal(result.getFloat("valorTotal"));
+                retorno.setData(result.getDate("data"));
             }            
         }catch(SQLException  e){
             System.out.println("Erro na seleção: "+ e.getMessage());
@@ -113,23 +114,22 @@ public class RefeicaoController {
         return retorno;
     }
     
-    public ArrayList<RefeicaoModel> selecionarTodos(){
-        ArrayList<RefeicaoModel> retorno = new ArrayList<>();
+    public ArrayList<CaixaModel> selecionarTodos(){
+        ArrayList<CaixaModel> retorno = new ArrayList<>();
         //CONECTAR COM O BANCO
         Conexao c = new Conexao();
         c.conectar();
         //CRIAR SQL
-        String sql = "select * from refeicao";
+        String sql = "select * from caixa";
         try {
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             ResultSet result = sentenca.executeQuery();
             //RECUPERAR DADOS DO BANCO
             while(result.next()){
-                RefeicaoModel refeicao = new RefeicaoModel();
-                refeicao.setIdRefeicao(result.getInt("idRefeicao"));
-                refeicao.setNome(result.getString("nome"));
-                refeicao.setValor(result.getFloat("valor"));
-                retorno.add(refeicao);
+                CaixaModel caixa = new CaixaModel();
+                caixa.setIdMateriaPrima(result.getInt("idMateriaPrima"));
+                caixa.setNome(result.getString("nome"));
+                caixa.setCustoPorKG(result.getFloat("custoPorKG"));
             }            
         }catch(SQLException  e){
             System.out.println("Erro na seleção: "+ e.getMessage());
@@ -138,8 +138,4 @@ public class RefeicaoController {
         c.desconectar();
         return retorno;
     }
-    
-    
-    
-    //ADICIONAR SELECIONAR ULTIMO
 }

@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -50,7 +52,18 @@ public class CaixaModel {
         this.formPagamento = formPagamento;
     }
     
-    
+    public String toStringDataVenda() {
+        LocalDate localDate = data.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        int dia = localDate.getDayOfMonth();
+        int mes = localDate.getMonthValue();
+        int ano = localDate.getYear();
+        
+        String retorno = String.valueOf(ano)+'-'+String.valueOf(mes)+'-'+String.valueOf(dia);
+        return retorno;
+    }
     
     
     

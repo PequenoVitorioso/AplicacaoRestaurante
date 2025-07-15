@@ -7,19 +7,19 @@ package model;
 public class PedidioModel {
     private int idPedido;
     private int hora;
-    private int codCliente;
+    private ClienteModel codCliente;
 
     public PedidioModel() {
         idPedido = 0;
         hora = 0;
-        codCliente = 0;
+        codCliente = new ClienteModel();
     }
 
-    public int getCodCliente() {
+    public ClienteModel getCodCliente() {
         return codCliente;
     }
 
-    public void setCodCliente(int codCliente) {
+    public void setCodCliente(ClienteModel codCliente) {
         this.codCliente = codCliente;
     }
 
