@@ -8,6 +8,7 @@ public class ClienteModel {
     private int codCliente;
     private int numMesa;
     private CaixaModel notaFiscal;
+    //private String nome;
 
     public ClienteModel() {
         codCliente = 0;

@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import model.MateriaPrimaModel;
 import model.RefeicaoModel;
 import util.Conexao;
 
@@ -49,7 +48,7 @@ public class RefeicaoController {
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             //PASSAR PARAMETROS
             sentenca.setString(1, refeicao.getNome());
-            sentenca.setFloat(2, refeicao.getvalor());
+            sentenca.setFloat(2, refeicao.getValor());
             sentenca.setInt(3, refeicao.getIdRefeicao());
             //EXECUTAR SENTENCA
             if (!sentenca.execute()) {
