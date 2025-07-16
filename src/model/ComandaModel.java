@@ -4,6 +4,7 @@ package model;
  *
  * @author paulo
  */
+//    |Refeicao_Pedido|
 public class ComandaModel {
     private RefeicaoModel refeicao;
     private PedidoModel pedido;

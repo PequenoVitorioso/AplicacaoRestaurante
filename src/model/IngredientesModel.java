@@ -4,6 +4,8 @@ package model;
  *
  * @author paulo
  */
+
+ //  |Refeicao_MateriaPrima|
 public class IngredientesModel {
     private MateriaPrimaModel materiaPrima;
     private RefeicaoModel refeicao;
