@@ -4,11 +4,11 @@ package model;
  *
  * @author paulo
  */
-public class Refeicao_PedidoModel {
+public class ComandaModel {
     private RefeicaoModel refeicao;
     private PedidoModel pedido;
 
-    public Refeicao_PedidoModel() {
+    public ComandaModel() {
         refeicao = new RefeicaoModel();
         pedido = new PedidoModel();
     }
