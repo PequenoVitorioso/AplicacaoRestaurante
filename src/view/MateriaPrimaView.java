@@ -69,12 +69,32 @@ public class MateriaPrimaView extends javax.swing.JFrame {
         jlCustoPorKG.setText("Custo por Kg:");
 
         jbNovo.setText("Novo");
+        jbNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNovoActionPerformed(evt);
+            }
+        });
 
         jbSalvar.setText("Salvar");
+        jbSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalvarActionPerformed(evt);
+            }
+        });
 
         jbEditar.setText("Editar");
+        jbEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarActionPerformed(evt);
+            }
+        });
 
         jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
 
         jbFechar.setText("Fechar");
         jbFechar.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +206,29 @@ public class MateriaPrimaView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
+        jbPesquisar.setEnabled(false);
+        jbNovo.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbSalvar.setEnabled(true);
+        jtxidMateriaPrima.setEditable(false);
+        jtxNome.setEditable(true);
+        jtxCustoPorKG.setEditable(true);
+    }//GEN-LAST:event_jbNovoActionPerformed
+
+    private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbSalvarActionPerformed
+
+    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbEditarActionPerformed
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbExcluirActionPerformed
 
     private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
         // TODO add your handling code here:
