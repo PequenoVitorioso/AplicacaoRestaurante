@@ -13,11 +13,21 @@ public class CaixaModel {
     private float valorTotal;
     private Date data;
     private String formPagamento;
+    private ClienteModel cliente;
 
     public CaixaModel() {
         numNotaFiscal = 0;
         valorTotal = 0;
         formPagamento = "";
+        cliente = new ClienteModel();
+    }
+
+    public ClienteModel getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteModel cliente) {
+        this.cliente = cliente;
     }
 
     public int getNumNotaFiscal() {

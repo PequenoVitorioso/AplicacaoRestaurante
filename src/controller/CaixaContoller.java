@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import model.CaixaModel;
+import model.*;
 import util.Conexao;
 
 /**
@@ -18,13 +18,14 @@ public class CaixaContoller {
         Conexao c = new Conexao();
         c.conectar();
         //CRIAR SQL INSERT
-        String sql = "insert into caixa (valorTotal, data, formPagamento) values (?,?,?)";
+        String sql = "insert into caixa (valorTotal, data, formPagamento, cliente) values (?,?,?,?)";
         try {
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             //PASSAR PARAMETROS
             sentenca.setFloat(1, caixa.getValorTotal());
             sentenca.setString(2, caixa.toStringDataVenda());
             sentenca.setString(3, caixa.getFormPagamento());
+            sentenca.setInt(4, caixa.getCliente().getCodCliente());
             //EXECUTAR SENTENCA
             if (!sentenca.execute()) {
                 retorno = true;
@@ -43,14 +44,15 @@ public class CaixaContoller {
         Conexao c = new Conexao();
         c.conectar();
         //CRIAR SQL UPDATE
-        String sql = "update caixa set valorTotal = ?, data = ?, formPagamento = ? where numNotaFiscal = ?";
+        String sql = "update caixa set valorTotal = ?, data = ?, formPagamento = ?, cliente = ? where numNotaFiscal = ?";
         try {
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             //PASSAR PARAMETROS
             sentenca.setFloat(1, caixa.getValorTotal());
             sentenca.setString(2, caixa.toStringDataVenda());
             sentenca.setString(3, caixa.getFormPagamento());
-            sentenca.setInt(4, caixa.getNumNotaFiscal());
+            sentenca.setInt(4, caixa.getCliente().getCodCliente());
+            sentenca.setInt(5, caixa.getNumNotaFiscal());
             //EXECUTAR SENTENCA
             if (!sentenca.execute()) {
                 retorno = true;
@@ -105,6 +107,7 @@ public class CaixaContoller {
                 retorno.setFormPagamento(result.getString("formPagamento"));
                 retorno.setValorTotal(result.getFloat("valorTotal"));
                 retorno.setData(result.getDate("data"));
+                retorno.getCliente().setCodCliente(result.getInt("codCliente"));
             }            
         }catch(SQLException  e){
             System.out.println("Erro na seleção: "+ e.getMessage());
@@ -131,6 +134,7 @@ public class CaixaContoller {
                 caixa.setFormPagamento(result.getString("formPagamento"));
                 caixa.setValorTotal(result.getFloat("valorTotal"));
                 caixa.setData(result.getDate("data"));
+                caixa.getCliente().setCodCliente(result.getInt("codCliente"));
                 retorno.add(caixa);
             }            
         }catch(SQLException  e){
