@@ -21,8 +21,11 @@ public class MateriaPrimaView extends javax.swing.JFrame {
     /**
      * Creates new form MateriaPrimaView
      */
+    private int linha = -1;
     public MateriaPrimaView() {
         initComponents();
+        preencherTabela();
+        inicializa();
     }
 
     /**
@@ -66,6 +69,11 @@ public class MateriaPrimaView extends javax.swing.JFrame {
                 "Código", "Nome", "Custo por Kg"
             }
         ));
+        jtMateriaPrima.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtMateriaPrimaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtMateriaPrima);
 
         jlCodigo.setText("Código");
@@ -238,27 +246,83 @@ public class MateriaPrimaView extends javax.swing.JFrame {
             //CONTROLLER
             MateriaPrimaController controller = new MateriaPrimaController();
             if(controller.inserir(materiaPrima)){
-                JOptionPane.showMessageDialog(this, "Produto Inserido com sucesso!");
+                JOptionPane.showMessageDialog(this, "Materia Prima Inserida com sucesso!");
                 limparCampos();
                 inicializa();
                 preencherTabela();
             }else
-                JOptionPane.showMessageDialog(this, "Erro ao inserir o produto!"
+                JOptionPane.showMessageDialog(this, "Erro ao inserir Materia Prima!"
                     , "Retorno BD", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
-        // TODO add your handling code here:
+        int idMateriaPrima = Integer.parseInt(jtxidMateriaPrima.getText());
+        
+        if((jtxNome.getText().isEmpty())||(jtxCustoPorKG.getText().isEmpty()))
+            JOptionPane.showMessageDialog(this, "Digite todos os campos!"
+                    , "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            String nome = jtxNome.getText();
+            float custo  = Float.parseFloat(jtxCustoPorKG.getText());
+            
+            MateriaPrimaModel MP = new MateriaPrimaModel();
+            MP.setIdMateriaPrima(idMateriaPrima);
+            MP.setNome(nome);
+            MP.setCustoPorKG(custo);
+            //CONTROLLER
+            MateriaPrimaController controller = new MateriaPrimaController();
+            if(controller.editar(MP)){
+                JOptionPane.showMessageDialog(this, "Atualização com sucesso!");
+                limparCampos();
+                inicializa();
+                preencherTabela();
+            }else
+                JOptionPane.showMessageDialog(this, "Erro ao editar Materia Prima!"
+                    , "Retorno BD", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jbEditarActionPerformed
 
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
-        // TODO add your handling code here:
+        MateriaPrimaModel MP = new MateriaPrimaModel();
+        if(jtxidMateriaPrima.getText().isEmpty())
+            JOptionPane.showMessageDialog(this, "Digite o código do Materia Prima!"
+                    , "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            MP.setIdMateriaPrima(Integer.parseInt(jtxidMateriaPrima.getText()));
+            //CONTROLLER 
+            MateriaPrimaController controller = new MateriaPrimaController();
+            if(controller.excluir(MP)){
+                JOptionPane.showMessageDialog(this, "Excluído com sucesso!");
+                limparCampos();
+                inicializa();
+                preencherTabela();
+            }else 
+                JOptionPane.showMessageDialog(this, "Erro ao Excluir!"
+                    , "Retorno BD", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jbExcluirActionPerformed
 
     private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_jbFecharActionPerformed
+
+    private void jtMateriaPrimaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtMateriaPrimaMouseClicked
+        linha = jtMateriaPrima.getSelectedRow();
+        if(linha !=-1){
+            jtxidMateriaPrima.setText(jtMateriaPrima.getValueAt(linha, 0).toString());
+            jtxNome.setText(jtMateriaPrima.getValueAt(linha, 1).toString());
+            jtxCustoPorKG.setText(jtMateriaPrima.getValueAt(linha, 2).toString());
+            jbNovo.setEnabled(false);
+            jbSalvar.setEnabled(false);
+            jbEditar.setEnabled(true);
+            jbExcluir.setEnabled(true);
+            jtxidMateriaPrima.setEditable(false);
+            jtxNome.setEditable(true);
+            jtxCustoPorKG.setEditable(true);            
+            linha = -1;
+        }
+    }//GEN-LAST:event_jtMateriaPrimaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -287,20 +351,19 @@ public class MateriaPrimaView extends javax.swing.JFrame {
     
     private void preencherTabela(){
         MateriaPrimaController controller = new MateriaPrimaController();
-        ArrayList<MateriaPrimaController> lista = controller.selecionarTodos();
-        DefaultTableModel modeloTabela = (DefaultTableModel) jtFornecedor.getModel();
+        ArrayList<MateriaPrimaModel> lista = controller.selecionarTodos();
+        DefaultTableModel modeloTabela = (DefaultTableModel) jtMateriaPrima.getModel();
         modeloTabela.setRowCount(0);
         if(lista.isEmpty())
-            JOptionPane.showMessageDialog(this, "Nenhum fornecedor cadastrado!"
+            JOptionPane.showMessageDialog(this, "Nenhuma Materia Prima cadastrada!"
                     ,"Retorno Tela", JOptionPane.ERROR_MESSAGE);
         else{
             
-            for(FornecedorModel f: lista){
+            for(MateriaPrimaModel f: lista){
                 modeloTabela.addRow(new String[]{
-                    String.valueOf(f.getIdFornecedor()),
-                    f.getCnpj(),
-                    f.getRazaoSocial(),
-                    f.getEndereco()
+                    String.valueOf(f.getIdMateriaPrima()),
+                    String.valueOf(f.getNome()),
+                    String.valueOf(f.getCustoPorKG())
                 });
             }
         }
