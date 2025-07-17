@@ -4,6 +4,11 @@ package model;
  *
  * @author paulo
  */
+/*
+
+OPA RAPHAEL BELEZA?
+
+*/
 public class ClienteModel {
     private int codCliente;
     private int numMesa;

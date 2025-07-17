@@ -4,6 +4,12 @@
  */
 package view;
 
+import controller.MateriaPrimaController;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.MateriaPrimaModel;
+
 /**
  *
  * @author pichau
@@ -219,7 +225,27 @@ public class MateriaPrimaView extends javax.swing.JFrame {
     }//GEN-LAST:event_jbNovoActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
-        // TODO add your handling code here:
+        if((jtxNome.getText().isEmpty())||(jtxCustoPorKG.getText().isEmpty()))
+            JOptionPane.showMessageDialog(this, "Digite todos os campos!"
+                    , "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            String nome = jtxNome.getText();
+            float custo  = Float.parseFloat(jtxCustoPorKG.getText());
+            //PASSAR PARAMETROS
+            MateriaPrimaModel materiaPrima = new MateriaPrimaModel();
+            materiaPrima.setNome(nome);
+            materiaPrima.setCustoPorKG(custo);
+            //CONTROLLER
+            MateriaPrimaController controller = new MateriaPrimaController();
+            if(controller.inserir(materiaPrima)){
+                JOptionPane.showMessageDialog(this, "Produto Inserido com sucesso!");
+                limparCampos();
+                inicializa();
+                preencherTabela();
+            }else
+                JOptionPane.showMessageDialog(this, "Erro ao inserir o produto!"
+                    , "Retorno BD", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
@@ -257,6 +283,42 @@ public class MateriaPrimaView extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MateriaPrimaView().setVisible(true));
+    }
+    
+    private void preencherTabela(){
+        MateriaPrimaController controller = new MateriaPrimaController();
+        ArrayList<MateriaPrimaController> lista = controller.selecionarTodos();
+        DefaultTableModel modeloTabela = (DefaultTableModel) jtFornecedor.getModel();
+        modeloTabela.setRowCount(0);
+        if(lista.isEmpty())
+            JOptionPane.showMessageDialog(this, "Nenhum fornecedor cadastrado!"
+                    ,"Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            
+            for(FornecedorModel f: lista){
+                modeloTabela.addRow(new String[]{
+                    String.valueOf(f.getIdFornecedor()),
+                    f.getCnpj(),
+                    f.getRazaoSocial(),
+                    f.getEndereco()
+                });
+            }
+        }
+    }
+    private void inicializa(){
+        jtxidMateriaPrima.setEditable(true);
+        jtxCustoPorKG.setEditable(false);
+        jtxNome.setEditable(false);
+        jbSalvar.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbPesquisar.setEnabled(true);
+        jbNovo.setEnabled(true);
+    }
+    private void limparCampos(){
+        jtxNome.setText("");
+        jtxCustoPorKG.setText("");
+        jtxidMateriaPrima.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
