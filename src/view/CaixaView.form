@@ -79,10 +79,15 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="465" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="37" pref="37" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="jbNovo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jbSalvar" min="-2" max="-2" attributes="0"/>
@@ -95,9 +100,12 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jlData" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jlValorTotal" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jlNotaFiscal" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                                  <Component id="jlData" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jlValorTotal" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jlNotaFiscal" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jlCliente" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -106,19 +114,23 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jbPesquisar" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jtxData" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jtxValorTotal" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jlFormPagamento" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="jtxValorTotal" min="-2" pref="110" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="jlFormPagamento" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jcbCliente" min="-2" pref="158" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jcbFormPagamento" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="jtxData" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="18" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -143,7 +155,12 @@
                       <Component id="jtxData" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jlData" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="23" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jlCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jcbCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="15" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jbNovo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -151,8 +168,8 @@
                       <Component id="jbExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbFechar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="175" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="149" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -273,6 +290,25 @@
                 <StringItem index="1" value="Cart&#xe3;o de D&#xe9;bito"/>
                 <StringItem index="2" value="Dinheiro"/>
                 <StringItem index="3" value="Pix"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jlCliente">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cliente:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jcbCliente">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="3">
+                <StringItem index="0" value=" "/>
+                <StringItem index="1" value=" "/>
+                <StringItem index="2" value=" "/>
               </StringArray>
             </Property>
           </Properties>

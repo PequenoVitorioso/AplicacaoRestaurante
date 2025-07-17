@@ -14,9 +14,9 @@ public class Conexao {
     public void conectar(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            //String url= "jdbc:mysql://localhost:/vendas";
-            //String usuario = "root";
-            //String senha = "root";
+            String url= "jdbc:mysql://localhost:/restaurante";
+            String usuario = "root";
+            String senha = "root";
             conector = DriverManager.getConnection(url,usuario,senha);
             System.out.println("Aplicação conectada com Banco!");
         }catch(ClassNotFoundException e){

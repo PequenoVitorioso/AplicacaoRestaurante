@@ -48,6 +48,8 @@ public class CaixaView extends javax.swing.JFrame {
         jtxNotaFiscal = new javax.swing.JTextField();
         jbPesquisar = new javax.swing.JButton();
         jcbFormPagamento = new javax.swing.JComboBox<>();
+        jlCliente = new javax.swing.JLabel();
+        jcbCliente = new javax.swing.JComboBox<>();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -109,13 +111,21 @@ public class CaixaView extends javax.swing.JFrame {
 
         jcbFormPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cartão de Crédito", "Cartão de Débito", "Dinheiro", "Pix" }));
 
+        jlCliente.setText("Cliente:");
+
+        jcbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " ", " " }));
+
         javax.swing.GroupLayout jpCaixaLayout = new javax.swing.GroupLayout(jpCaixa);
         jpCaixa.setLayout(jpCaixaLayout);
         jpCaixaLayout.setHorizontalGroup(
             jpCaixaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCaixaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
             .addGroup(jpCaixaLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addGroup(jpCaixaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jpCaixaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpCaixaLayout.createSequentialGroup()
                         .addComponent(jbNovo)
                         .addGap(18, 18, 18)
@@ -128,24 +138,28 @@ public class CaixaView extends javax.swing.JFrame {
                         .addComponent(jbFechar))
                     .addGroup(jpCaixaLayout.createSequentialGroup()
                         .addGroup(jpCaixaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlData)
-                            .addComponent(jlValorTotal, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jlNotaFiscal, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGroup(jpCaixaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jlData)
+                                .addComponent(jlValorTotal, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jlNotaFiscal, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jlCliente))
                         .addGap(18, 18, 18)
                         .addGroup(jpCaixaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpCaixaLayout.createSequentialGroup()
                                 .addComponent(jtxNotaFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jbPesquisar))
-                            .addComponent(jtxData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jpCaixaLayout.createSequentialGroup()
-                                .addComponent(jtxValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jlFormPagamento)
-                                .addGap(18, 18, 18)
-                                .addComponent(jcbFormPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jpCaixaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpCaixaLayout.createSequentialGroup()
+                                        .addComponent(jtxValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jlFormPagamento))
+                                    .addComponent(jcbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcbFormPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtxData, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jpCaixaLayout.setVerticalGroup(
             jpCaixaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,15 +179,19 @@ public class CaixaView extends javax.swing.JFrame {
                 .addGroup(jpCaixaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtxData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlData))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jpCaixaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCliente)
+                    .addComponent(jcbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(jpCaixaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbNovo)
                     .addComponent(jbSalvar)
                     .addComponent(jbEditar)
                     .addComponent(jbExcluir)
                     .addComponent(jbFechar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -234,8 +252,10 @@ public class CaixaView extends javax.swing.JFrame {
     private javax.swing.JButton jbNovo;
     private javax.swing.JButton jbPesquisar;
     private javax.swing.JButton jbSalvar;
+    private javax.swing.JComboBox<String> jcbCliente;
     private javax.swing.JComboBox<String> jcbFormPagamento;
     private javax.swing.JInternalFrame jifCaixa;
+    private javax.swing.JLabel jlCliente;
     private javax.swing.JLabel jlData;
     private javax.swing.JLabel jlFormPagamento;
     private javax.swing.JLabel jlNotaFiscal;

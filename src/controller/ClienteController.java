@@ -19,12 +19,12 @@ public class ClienteController {
         Conexao c = new Conexao();
         c.conectar();
         //CRIAR SQL INSERT
-        String sql = "insert into cliente (numMesa, notaFiscal) values (?,?)";
+        String sql = "insert into cliente (numMesa, nome) values (?,?)";
         try {
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             //PASSAR PARAMETROS
             sentenca.setInt(1, cliente.getNumMesa());
-            sentenca.setInt(2, cliente.getNotaFiscal().getNumNotaFiscal());
+            sentenca.setString(2, cliente.getNome());
             //EXECUTAR SENTENCA
             if (!sentenca.execute()) {
                 retorno = true;
@@ -43,12 +43,12 @@ public class ClienteController {
         Conexao c = new Conexao();
         c.conectar();
         //CRIAR SQL UPDATE
-        String sql = "update cliente set numMesa = ?, notaFiscal = ? where codCliente = ?";
+        String sql = "update cliente set numMesa = ?, nome = ? where codCliente = ?";
         try {
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             //PASSAR PARAMETROS
             sentenca.setInt(1, cliente.getNumMesa());
-            sentenca.setInt(2, cliente.getNotaFiscal().getNumNotaFiscal());
+            sentenca.setString(2, cliente.getNome());
             sentenca.setInt(3, cliente.getCodCliente());
             //EXECUTAR SENTENCA
             if (!sentenca.execute()) {
@@ -102,7 +102,7 @@ public class ClienteController {
                 retorno = new ClienteModel();
                 retorno.setCodCliente(result.getInt("codCliente"));
                 retorno.setNumMesa(result.getInt("numMesa"));
-                retorno.getNotaFiscal().setNumNotaFiscal(result.getInt("numNotaFiscal"));
+                retorno.setNome(result.getString("nome"));
             }            
         }catch(SQLException  e){
             System.out.println("Erro na seleção: "+ e.getMessage());
@@ -127,7 +127,7 @@ public class ClienteController {
                 ClienteModel pedido = new ClienteModel();
                 pedido.setCodCliente(result.getInt("codCliente"));
                 pedido.setNumMesa(result.getInt("numMesa"));
-                pedido.getNotaFiscal().setNumNotaFiscal(result.getInt("numNotaFiscal"));
+                pedido.setNome(result.getString("nome"));
                 retorno.add(pedido);
             }            
         }catch(SQLException  e){

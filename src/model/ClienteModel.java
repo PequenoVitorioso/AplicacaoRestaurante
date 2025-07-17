@@ -7,13 +7,12 @@ package model;
 public class ClienteModel {
     private int codCliente;
     private int numMesa;
-    private CaixaModel notaFiscal;
-    //private String nome;
+    private String nome;
 
     public ClienteModel() {
         codCliente = 0;
         numMesa = 0;
-        notaFiscal = new CaixaModel();
+        nome = "";
     }
 
     public int getCodCliente() {
@@ -31,14 +30,11 @@ public class ClienteModel {
     public void setNumMesa(int numMesa) {
         this.numMesa = numMesa;
     }
-
-    public CaixaModel getNotaFiscal() {
-        return notaFiscal;
-    }
-
-    public void setNotaFiscal(CaixaModel notaFiscal) {
-        this.notaFiscal = notaFiscal;
-    }
     
-    
+    public String getNome(){
+        return nome;
+    }
+    public void setNome(String nome){
+        this.nome = nome;
+    }
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 /**
@@ -38,16 +34,16 @@ public class ClienteView extends javax.swing.JFrame {
         jtCliente = new javax.swing.JTable();
         jlCodigo = new javax.swing.JLabel();
         jlnumMesa = new javax.swing.JLabel();
-        jlNotaFiscal = new javax.swing.JLabel();
         jtxCodCliente = new javax.swing.JTextField();
         jtxNumMesa = new javax.swing.JTextField();
-        jcbNotaFiscal = new javax.swing.JComboBox<>();
         jbPesquisar = new javax.swing.JButton();
         jbNovo = new javax.swing.JButton();
         jbSalvar = new javax.swing.JButton();
         jbEditar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
         jbFechar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jtxNome = new javax.swing.JTextField();
         jixCliente = new javax.swing.JInternalFrame();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -95,10 +91,6 @@ public class ClienteView extends javax.swing.JFrame {
 
         jlnumMesa.setText("Número da mesa:");
 
-        jlNotaFiscal.setText("Nota Fiscal");
-
-        jcbNotaFiscal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " ", " " }));
-
         jbPesquisar.setText("Pesquisar");
 
         jbNovo.setText("Novo");
@@ -111,46 +103,48 @@ public class ClienteView extends javax.swing.JFrame {
 
         jbFechar.setText("Fechar");
 
+        jLabel1.setText("Nome:");
+
         javax.swing.GroupLayout jpClienteLayout = new javax.swing.GroupLayout(jpCliente);
         jpCliente.setLayout(jpClienteLayout);
         jpClienteLayout.setHorizontalGroup(
             jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpClienteLayout.createSequentialGroup()
                 .addContainerGap(27, Short.MAX_VALUE)
-                .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jpClienteLayout.createSequentialGroup()
+                            .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addGroup(jpClienteLayout.createSequentialGroup()
+                                    .addComponent(jbNovo)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jbSalvar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jbEditar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jbExcluir)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jbFechar)))
+                            .addGap(27, 27, 27))
+                        .addGroup(jpClienteLayout.createSequentialGroup()
+                            .addComponent(jlCodigo)
+                            .addGap(18, 18, 18)
+                            .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jpClienteLayout.createSequentialGroup()
+                                    .addComponent(jtxCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jbPesquisar))
+                                .addComponent(jtxNome))
+                            .addGap(218, 218, 218)))
                     .addGroup(jpClienteLayout.createSequentialGroup()
                         .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
                             .addGroup(jpClienteLayout.createSequentialGroup()
-                                .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jpClienteLayout.createSequentialGroup()
-                                        .addComponent(jlnumMesa)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jtxNumMesa))
-                                    .addGroup(jpClienteLayout.createSequentialGroup()
-                                        .addComponent(jlCodigo)
-                                        .addGap(70, 70, 70)
-                                        .addComponent(jtxCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jlnumMesa)
                                 .addGap(18, 18, 18)
-                                .addComponent(jbPesquisar))
-                            .addGroup(jpClienteLayout.createSequentialGroup()
-                                .addComponent(jlNotaFiscal)
-                                .addGap(54, 54, 54)
-                                .addComponent(jcbNotaFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(166, 166, 166))
-                    .addGroup(jpClienteLayout.createSequentialGroup()
-                        .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(jpClienteLayout.createSequentialGroup()
-                                .addComponent(jbNovo)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbSalvar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jbEditar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jbExcluir)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jbFechar)))
-                        .addGap(27, 27, 27))))
+                                .addComponent(jtxNumMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(258, 258, 258))))
         );
         jpClienteLayout.setVerticalGroup(
             jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,14 +154,14 @@ public class ClienteView extends javax.swing.JFrame {
                     .addComponent(jlCodigo)
                     .addComponent(jtxCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbPesquisar))
-                .addGap(23, 23, 23)
+                .addGap(25, 25, 25)
+                .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jtxNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
                 .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlnumMesa)
                     .addComponent(jtxNumMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlNotaFiscal)
-                    .addComponent(jcbNotaFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jpClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbNovo)
@@ -175,7 +169,7 @@ public class ClienteView extends javax.swing.JFrame {
                     .addComponent(jbEditar)
                     .addComponent(jbExcluir)
                     .addComponent(jbFechar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -258,6 +252,7 @@ public class ClienteView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -270,14 +265,13 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JButton jbNovo;
     private javax.swing.JButton jbPesquisar;
     private javax.swing.JButton jbSalvar;
-    private javax.swing.JComboBox<String> jcbNotaFiscal;
     private javax.swing.JInternalFrame jixCliente;
     private javax.swing.JLabel jlCodigo;
-    private javax.swing.JLabel jlNotaFiscal;
     private javax.swing.JLabel jlnumMesa;
     private javax.swing.JPanel jpCliente;
     private javax.swing.JTable jtCliente;
     private javax.swing.JTextField jtxCodCliente;
+    private javax.swing.JTextField jtxNome;
     private javax.swing.JTextField jtxNumMesa;
     // End of variables declaration//GEN-END:variables
 }
