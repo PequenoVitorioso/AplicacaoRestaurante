@@ -1,18 +1,29 @@
 package view;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import model.*;
+import controller.*;
+import java.text.ParseException;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author pichau
  */
 public class CaixaView extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CaixaView.class.getName());
+    private ArrayList<ClienteModel> listaClientes;
+    //private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CaixaView.class.getName());
 
     /**
      * Creates new form CaixaView
      */
     public CaixaView() {
         initComponents();
+        preencherTabela();
+        inicializa();
+        preencherCombo();
     }
 
     /**
@@ -68,9 +79,6 @@ public class CaixaView extends javax.swing.JFrame {
 
         jtbCaixa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -80,14 +88,39 @@ public class CaixaView extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jtbCaixa);
 
         jbNovo.setText("Novo");
+        jbNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNovoActionPerformed(evt);
+            }
+        });
 
         jbSalvar.setText("Salvar");
+        jbSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalvarActionPerformed(evt);
+            }
+        });
 
         jbEditar.setText("Editar");
+        jbEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarActionPerformed(evt);
+            }
+        });
 
         jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
 
         jbFechar.setText("Fechar");
+        jbFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbFecharActionPerformed(evt);
+            }
+        });
 
         jlNotaFiscal.setText("Nota fiscal:");
 
@@ -97,19 +130,11 @@ public class CaixaView extends javax.swing.JFrame {
 
         jlFormPagamento.setText("Forma de Pagamento");
 
-        jtxData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxDataActionPerformed(evt);
-            }
-        });
-
         jbPesquisar.setText("Pesquisar");
 
         jcbFormPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cartão de Crédito", "Cartão de Débito", "Dinheiro", "Pix" }));
 
         jlCliente.setText("Cliente:");
-
-        jcbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " ", " " }));
 
         javax.swing.GroupLayout jpCaixaLayout = new javax.swing.GroupLayout(jpCaixa);
         jpCaixa.setLayout(jpCaixaLayout);
@@ -209,33 +234,166 @@ public class CaixaView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtxDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxDataActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxDataActionPerformed
+    private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
+        jbPesquisar.setEnabled(false);
+        jbNovo.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbSalvar.setEnabled(true);
+        jtxNotaFiscal.setEditable(false);
+        jtxValorTotal.setEditable(true);
+        jtxData.setEditable(true);
+    }//GEN-LAST:event_jbNovoActionPerformed
+
+    private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        if((jtxValorTotal.getText().isEmpty())||(jtxData.getText().isEmpty()))
+            JOptionPane.showMessageDialog(this, "Digite todos os campos!"
+                    , "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{          
+            float valor  = Float.parseFloat(jtxValorTotal.getText());
+            String clien = (String) jcbCliente.getSelectedItem();
+            int cliente = 0;
+            for(int i=0; i< listaClientes.size();i++){
+                if(clien.equals(listaClientes.get(i).getNome())){
+                    cliente = listaClientes.get(i).getCodCliente();
+                    break;
+                }
+            }
+            String formPagamento = (String) jcbFormPagamento.getSelectedItem();
+            CaixaModel caixa = new CaixaModel();
+            String dataString = jtxData.getText();
+            SimpleDateFormat sdfEntrada = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                caixa.setData(sdfEntrada.parse(dataString));
+            } catch (ParseException ex) {
+                System.out.println(ex.getMessage());
+            }
+            caixa.setValorTotal(valor);
+            caixa.getCliente().setCodCliente(cliente);
+            caixa.setFormPagamento(formPagamento);
+            //CONTROLLER
+            CaixaContoller controller = new CaixaContoller();
+            if(controller.inserir(caixa)){
+                JOptionPane.showMessageDialog(this, "Produto Inserido com sucesso!");
+                limparCampos();
+                inicializa();
+                preencherTabela();
+            }else
+                JOptionPane.showMessageDialog(this, "Erro ao inserir a Nota Fiscal!"
+                    , "Retorno BD", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbSalvarActionPerformed
+
+    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
+        int notaFiscal = Integer.parseInt(jtxNotaFiscal.getText());
+        
+        if((jtxData.getText().isEmpty())||(jtxValorTotal.getText().isEmpty()))
+            JOptionPane.showMessageDialog(this, "Digite todos os campos!"
+                    , "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{ 
+            float valor  = Float.parseFloat(jtxValorTotal.getText());
+            String clien = (String) jcbCliente.getSelectedItem();
+            int cliente = 0;
+            for(int i=0; i< listaClientes.size();i++){
+                if(clien.equals(listaClientes.get(i).getNome())){
+                    cliente = listaClientes.get(i).getCodCliente();
+                    break;
+                }
+            }
+            String formPagamento = (String) jcbFormPagamento.getSelectedItem();
+            CaixaModel caixa = new CaixaModel();
+            String dataString = jtxData.getText();
+            SimpleDateFormat sdfEntrada = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                caixa.setData(sdfEntrada.parse(dataString));
+            } catch (ParseException ex) {
+                System.out.println(ex.getMessage());
+            }
+            caixa.setValorTotal(valor);
+            caixa.setFormPagamento(formPagamento);
+            caixa.getCliente().setCodCliente(cliente);
+            caixa.setNumNotaFiscal(notaFiscal);
+            CaixaContoller controller = new CaixaContoller();
+            if(controller.editar(caixa)){
+                JOptionPane.showMessageDialog(this, "Produto Inserido com sucesso!");
+                limparCampos();
+                inicializa();
+                preencherTabela();
+            }else
+                JOptionPane.showMessageDialog(this, "Erro ao inserir o Nota Fiscal!"
+                    , "Retorno BD", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbEditarActionPerformed
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        CaixaModel caixa = new CaixaModel();
+        if(jtxNotaFiscal.getText().isEmpty())
+            JOptionPane.showMessageDialog(this, "Digite o código da Nota Fiscal!"
+                    , "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            caixa.setNumNotaFiscal(Integer.parseInt(jtxNotaFiscal.getText()));
+            //CONTROLLER 
+            CaixaContoller controller = new CaixaContoller();
+            if(controller.excluir(caixa)){
+                JOptionPane.showMessageDialog(this, "Excluído com sucesso!");
+                limparCampos();
+                inicializa();
+                preencherTabela();
+            }else 
+                JOptionPane.showMessageDialog(this, "Erro ao Excluir!"
+                    , "Retorno BD", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbExcluirActionPerformed
+
+    private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbFecharActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    
+    private void preencherTabela(){
+        CaixaContoller controller = new CaixaContoller();
+        ArrayList<CaixaModel> lista = controller.selecionarTodos();
+        DefaultTableModel modeloTabela = (DefaultTableModel) jtbCaixa.getModel();
+        modeloTabela.setRowCount(0);
+        if(lista.isEmpty())
+            JOptionPane.showMessageDialog(this, "Nenhuma Nota Fiscal cadastrado!"
+                    ,"Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            for(CaixaModel p: lista){
+                modeloTabela.addRow(new String[]{
+                    String.valueOf(p.getNumNotaFiscal()),
+                    String.valueOf(p.getValorTotal()),
+                    String.valueOf(p.getData()),
+                    String.valueOf(p.getFormPagamento())
+                });
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new CaixaView().setVisible(true));
+    }
+    
+    private void inicializa(){
+        jtxNotaFiscal.setEditable(true);
+        jtxValorTotal.setEditable(false);
+        jtxData.setEditable(false);
+        jbSalvar.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbPesquisar.setEnabled(true);
+        jbNovo.setEnabled(true);
+    }
+    private void limparCampos(){
+        jtxNotaFiscal.setText("");
+        jtxValorTotal.setText("");
+        jtxData.setText("");
+        jcbCliente.setSelectedIndex(0);
+    }
+    private void preencherCombo(){
+        ClienteController controller = new ClienteController();
+        listaClientes = controller.selecionarTodos();
+        for(ClienteModel f: listaClientes)
+            jcbCliente.addItem(f.getNome());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,22 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
+
+import controller.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.*;
 
 /**
  *
  * @author pichau
  */
 public class PedidoView extends javax.swing.JFrame {
-    
+    private ArrayList<RefeicaoModel> listaRefeicao;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PedidoView.class.getName());
-
+    
     /**
      * Creates new form PedidoView
      */
     public PedidoView() {
         initComponents();
+        preencherCombo();
     }
 
     /**
@@ -37,7 +42,7 @@ public class PedidoView extends javax.swing.JFrame {
         jlCódigo = new javax.swing.JLabel();
         jlNumMesa = new javax.swing.JLabel();
         jlHora = new javax.swing.JLabel();
-        jtxNumMesa = new javax.swing.JTextField();
+        jtxCodCliente = new javax.swing.JTextField();
         jtxCodigo = new javax.swing.JTextField();
         jtxHora = new javax.swing.JTextField();
         jlRefeicao = new javax.swing.JLabel();
@@ -46,6 +51,7 @@ public class PedidoView extends javax.swing.JFrame {
         jtxQuantidade = new javax.swing.JTextField();
         jbAdicionar = new javax.swing.JButton();
         jbPesquisar = new javax.swing.JButton();
+        jbFechar = new javax.swing.JButton();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -66,42 +72,54 @@ public class PedidoView extends javax.swing.JFrame {
 
         jtPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Número da Mesa", "Refeição", "Quantidade"
+                "Codigo do Cliente", "Refeição", "Quantidade"
             }
         ));
         jScrollPane1.setViewportView(jtPedido);
 
         jbSalvarPedido.setText("Salvar Pedido");
+        jbSalvarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalvarPedidoActionPerformed(evt);
+            }
+        });
 
         jlCódigo.setText("Código:");
 
-        jlNumMesa.setText("Número da Mesa:");
+        jlNumMesa.setText("Codigo do Cliente");
 
         jlHora.setText("Hora:");
 
         jlRefeicao.setText("Refeição");
 
-        jcbRefeicao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " ", " " }));
-
         jlQuantidade.setText("Quantidade");
 
         jbAdicionar.setText("Adicionar");
+        jbAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAdicionarActionPerformed(evt);
+            }
+        });
 
         jbPesquisar.setText("Pesquisar");
+
+        jbFechar.setText("Fechar");
+        jbFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbFecharActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpPedidoLayout = new javax.swing.GroupLayout(jpPedido);
         jpPedido.setLayout(jpPedidoLayout);
         jpPedidoLayout.setHorizontalGroup(
             jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPedidoLayout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addGroup(jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addGroup(jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jbSalvarPedido)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpPedidoLayout.createSequentialGroup()
@@ -112,24 +130,32 @@ public class PedidoView extends javax.swing.JFrame {
                                 .addComponent(jcbRefeicao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpPedidoLayout.createSequentialGroup()
                                 .addGroup(jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlNumMesa)
-                                    .addComponent(jlCódigo)
-                                    .addComponent(jlHora))
-                                .addGap(18, 18, 18)
+                                    .addGroup(jpPedidoLayout.createSequentialGroup()
+                                        .addGroup(jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jlCódigo)
+                                            .addComponent(jlHora))
+                                        .addGap(67, 67, 67))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPedidoLayout.createSequentialGroup()
+                                        .addComponent(jlNumMesa)
+                                        .addGap(18, 18, 18)))
                                 .addGroup(jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jtxCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                                    .addComponent(jtxNumMesa)
+                                    .addComponent(jtxCodCliente)
                                     .addComponent(jtxHora))))
                         .addGap(18, 18, 18)
                         .addGroup(jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpPedidoLayout.createSequentialGroup()
+                                .addComponent(jbPesquisar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbFechar))
+                            .addGroup(jpPedidoLayout.createSequentialGroup()
                                 .addComponent(jlQuantidade)
                                 .addGap(18, 18, 18)
-                                .addComponent(jtxQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbAdicionar))
-                            .addComponent(jbPesquisar))))
-                .addGap(16, 16, 16))
+                                .addComponent(jtxQuantidade))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPedidoLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jbAdicionar)))))
+                .addGap(20, 20, 20))
         );
         jpPedidoLayout.setVerticalGroup(
             jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,22 +164,28 @@ public class PedidoView extends javax.swing.JFrame {
                 .addGroup(jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlCódigo)
                     .addComponent(jtxCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbPesquisar))
+                    .addComponent(jbPesquisar)
+                    .addComponent(jbFechar))
                 .addGap(18, 18, 18)
                 .addGroup(jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlNumMesa)
-                    .addComponent(jtxNumMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlHora)
-                    .addComponent(jtxHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                    .addComponent(jtxCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPedidoLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlHora)
+                            .addComponent(jtxHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPedidoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbAdicionar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jpPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlRefeicao)
                     .addComponent(jcbRefeicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlQuantidade)
-                    .addComponent(jtxQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbAdicionar))
+                    .addComponent(jtxQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -185,35 +217,74 @@ public class PedidoView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+    private void jbAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarActionPerformed
+        String refeicao = (String)jcbRefeicao.getSelectedItem();
+            int idRefeicao = 0;
+            for(int i=0; i<listaRefeicao.size();i++){
+                if(refeicao.equals(listaRefeicao.get(i).getNome())){
+                    idRefeicao = listaRefeicao.get(i).getIdRefeicao();
                     break;
                 }
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+            String quantidade = jtxQuantidade.getText();
+        DefaultTableModel modelo = (DefaultTableModel) jtPedido.getModel();
+        modelo.addRow(new String[]{String.valueOf(idRefeicao), refeicao, quantidade});
+        jtxQuantidade.setText("");
+        jcbRefeicao.setSelectedIndex(0);
+    }//GEN-LAST:event_jbAdicionarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PedidoView().setVisible(true));
+    private void jbSalvarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarPedidoActionPerformed
+        PedidoModel pedido = new PedidoModel();
+        int codigocliente = Integer.parseInt(jtxCodCliente.getText());
+        pedido.getCodCliente().setCodCliente(codigocliente);
+        pedido.setHora(Integer.parseInt(jtxHora.getText()));
+        
+        PedidoController controller = new PedidoController();
+        controller.inserir(pedido);
+        int codigoPedido = controller.selecionarUltimoId();
+        
+        ComandaController controllerComanda = new ComandaController();
+        for(int i=0; i< jtPedido.getRowCount();i++){
+            ComandaModel CM = new ComandaModel();
+            CM.getPedido().setIdPedido(codigoPedido);
+            CM.getRefeicao().setIdRefeicao(Integer.parseInt(jtPedido.getValueAt(i, 0).toString()));
+            CM.setQuantidade(Integer.parseInt(jtPedido.getValueAt(i, 2).toString()));
+            controllerComanda.inserir(CM);
+        }
+        
+        JOptionPane.showMessageDialog(this, "Pedido cadastrado com sucesso!");
+        preencherCombo();
+        limparCampos();
+    }//GEN-LAST:event_jbSalvarPedidoActionPerformed
+
+    private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbFecharActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    
+    private void preencherCombo(){
+        RefeicaoController controller = new RefeicaoController();
+        listaRefeicao = controller.selecionarTodos();
+        for(RefeicaoModel r: listaRefeicao)
+            jcbRefeicao.addItem(r.getNome());   
     }
+    
+    private void limparCampos(){
+        jtxCodCliente.setText("");
+        jtxHora.setText("");
+        jtxQuantidade.setText("");
+    }
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JButton jbAdicionar;
+    private javax.swing.JButton jbFechar;
     private javax.swing.JButton jbPesquisar;
     private javax.swing.JButton jbSalvarPedido;
     private javax.swing.JComboBox<String> jcbRefeicao;
@@ -225,9 +296,9 @@ public class PedidoView extends javax.swing.JFrame {
     private javax.swing.JLabel jlRefeicao;
     private javax.swing.JPanel jpPedido;
     private javax.swing.JTable jtPedido;
+    private javax.swing.JTextField jtxCodCliente;
     private javax.swing.JTextField jtxCodigo;
     private javax.swing.JTextField jtxHora;
-    private javax.swing.JTextField jtxNumMesa;
     private javax.swing.JTextField jtxQuantidade;
     // End of variables declaration//GEN-END:variables
 }

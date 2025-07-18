@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import controller.MateriaPrimaController;
@@ -82,6 +78,8 @@ public class MateriaPrimaView extends javax.swing.JFrame {
 
         jlCustoPorKG.setText("Custo por Kg:");
 
+        jtxidMateriaPrima.setMinimumSize(new java.awt.Dimension(80, 22));
+
         jbNovo.setText("Novo");
         jbNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,6 +116,11 @@ public class MateriaPrimaView extends javax.swing.JFrame {
         });
 
         jbPesquisar.setText("Pesquisar");
+        jbPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbPesquisarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpMateriaPrimaLayout = new javax.swing.GroupLayout(jpMateriaPrima);
         jpMateriaPrima.setLayout(jpMateriaPrimaLayout);
@@ -145,7 +148,7 @@ public class MateriaPrimaView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jpMateriaPrimaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jpMateriaPrimaLayout.createSequentialGroup()
-                                .addComponent(jtxidMateriaPrima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtxidMateriaPrima, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jbPesquisar))
                             .addComponent(jtxNome)
@@ -324,30 +327,40 @@ public class MateriaPrimaView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtMateriaPrimaMouseClicked
 
+    private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
+        MateriaPrimaModel MP = new MateriaPrimaModel();
+        if(jtxidMateriaPrima.getText().isEmpty())
+            JOptionPane.showMessageDialog(this, "Preencha o código do produto!"
+                    , "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            MP.setIdMateriaPrima(Integer.parseInt(jtxidMateriaPrima.getText()));
+            //CONTROLLER
+            MateriaPrimaController controller = new MateriaPrimaController();
+            MP = controller.selecionar(MP);
+            //VALIDAR SE OBJETO FORNECEDOR FOI ENCONTRADO... 
+            if(MP == null)
+                JOptionPane.showMessageDialog(this, "Produto não encontrado!"
+                    , "Retorno BD", JOptionPane.ERROR_MESSAGE);
+            else{
+                //PREENCHER OS CAMPOS...
+                jtxNome.setText(MP.getNome());
+                jtxCustoPorKG.setText(String.valueOf(MP.getCustoPorKG()));
+                jtxidMateriaPrima.setText(String.valueOf(MP.getIdMateriaPrima()));
+                jbNovo.setEnabled(false);
+                jbSalvar.setEnabled(false);
+                jbEditar.setEnabled(true);
+                jbExcluir.setEnabled(true);
+                jtxidMateriaPrima.setEditable(false);
+                jtxCustoPorKG.setEditable(true);
+                jtxNome.setEditable(true);
+            }
+        }
+    }//GEN-LAST:event_jbPesquisarActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MateriaPrimaView().setVisible(true));
-    }
+    
     
     private void preencherTabela(){
         MateriaPrimaController controller = new MateriaPrimaController();

@@ -1,5 +1,11 @@
 package view;
 
+import controller.ClienteController;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.ClienteModel;
+
 /**
  *
  * @author pichau
@@ -11,8 +17,11 @@ public class ClienteView extends javax.swing.JFrame {
     /**
      * Creates new form ClienteView
      */
+    private int linha = -1;
     public ClienteView() {
         initComponents();
+        preencherTabela();
+        inicializa();
     }
 
     /**
@@ -82,9 +91,14 @@ public class ClienteView extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Código", "Número da mesa", "Nota fiscal"
+                "Código", "Número da mesa", "Numero da Mesa"
             }
         ));
+        jtCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtClienteMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jtCliente);
 
         jlCodigo.setText("Código:");
@@ -92,16 +106,46 @@ public class ClienteView extends javax.swing.JFrame {
         jlnumMesa.setText("Número da mesa:");
 
         jbPesquisar.setText("Pesquisar");
+        jbPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbPesquisarActionPerformed(evt);
+            }
+        });
 
         jbNovo.setText("Novo");
+        jbNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNovoActionPerformed(evt);
+            }
+        });
 
         jbSalvar.setText("Salvar");
+        jbSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalvarActionPerformed(evt);
+            }
+        });
 
         jbEditar.setText("Editar");
+        jbEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarActionPerformed(evt);
+            }
+        });
 
         jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
 
         jbFechar.setText("Fechar");
+        jbFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbFecharActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Nome:");
 
@@ -226,29 +270,176 @@ public class ClienteView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
+        jbPesquisar.setEnabled(false);
+        jbNovo.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbSalvar.setEnabled(true);
+        jtxCodCliente.setEditable(false);
+        jtxNome.setEditable(true);
+        jtxNumMesa.setEditable(true);
+    }//GEN-LAST:event_jbNovoActionPerformed
+
+    private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        if((jtxNome.getText().isEmpty())||(jtxNumMesa.getText().isEmpty()))
+            JOptionPane.showMessageDialog(this, "Digite todos os campos!"
+                    , "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            String nome = jtxNome.getText();
+            int numMesa  = Integer.parseInt(jtxNumMesa.getText());
+            //PASSAR PARAMETROS
+            ClienteModel cliente = new ClienteModel();
+            cliente.setNome(nome);
+            cliente.setNumMesa(numMesa);
+            //CONTROLLER
+            ClienteController controller = new ClienteController();
+            if(controller.inserir(cliente)){
+                JOptionPane.showMessageDialog(this, "Cliente Inserida com sucesso!");
+                limparCampos();
+                inicializa();
+                preencherTabela();
+            }else
+                JOptionPane.showMessageDialog(this, "Erro ao inserir Materia Prima!"
+                    , "Retorno BD", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbSalvarActionPerformed
+
+    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
+        int codCliente = Integer.parseInt(jtxCodCliente.getText());
+        
+        if((jtxNome.getText().isEmpty())||(jtxNumMesa.getText().isEmpty()))
+            JOptionPane.showMessageDialog(this, "Digite todos os campos!"
+                    , "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            String nome = jtxNome.getText();
+            int numMesa  = Integer.parseInt(jtxNumMesa.getText());
+            
+            ClienteModel cliente = new ClienteModel();
+            cliente.setCodCliente(codCliente);
+            cliente.setNome(nome);
+            cliente.setNumMesa(numMesa);
+            //CONTROLLER
+            ClienteController controller = new ClienteController();
+            if(controller.editar(cliente)){
+                JOptionPane.showMessageDialog(this, "Atualização com sucesso!");
+                limparCampos();
+                inicializa();
+                preencherTabela();
+            }else
+                JOptionPane.showMessageDialog(this, "Erro ao editar Cliente!"
+                    , "Retorno BD", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbEditarActionPerformed
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        ClienteModel cliente = new ClienteModel();
+        if(jtxCodCliente.getText().isEmpty())
+            JOptionPane.showMessageDialog(this, "Digite o código do Cliente!"
+                    , "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            cliente.setCodCliente(Integer.parseInt(jtxCodCliente.getText()));
+            //CONTROLLER 
+            ClienteController controller = new ClienteController();
+            if(controller.excluir(cliente)){
+                JOptionPane.showMessageDialog(this, "Excluído com sucesso!");
+                limparCampos();
+                inicializa();
+                preencherTabela();
+            }else 
+                JOptionPane.showMessageDialog(this, "Erro ao Excluir!"
+                    , "Retorno BD", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbExcluirActionPerformed
+
+    private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbFecharActionPerformed
+
+    private void jtClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtClienteMouseClicked
+        linha = jtCliente.getSelectedRow();
+        if(linha !=-1){
+            jtxCodCliente.setText(jtCliente.getValueAt(linha, 0).toString());
+            jtxNome.setText(jtCliente.getValueAt(linha, 1).toString());
+            jtxNumMesa.setText(jtCliente.getValueAt(linha, 2).toString());
+            jbNovo.setEnabled(false);
+            jbSalvar.setEnabled(false);
+            jbEditar.setEnabled(true);
+            jbExcluir.setEnabled(true);
+            jtxCodCliente.setEditable(false);
+            jtxNome.setEditable(true);
+            jtxNumMesa.setEditable(true);            
+            linha = -1;
+        }
+    }//GEN-LAST:event_jtClienteMouseClicked
+
+    private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
+        ClienteModel cliente = new ClienteModel();
+        if(jtxCodCliente.getText().isEmpty())
+            JOptionPane.showMessageDialog(this, "Preencha o código do produto!"
+                    , "Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            cliente.setCodCliente(Integer.parseInt(jtxCodCliente.getText()));
+            //CONTROLLER
+            ClienteController controller = new ClienteController();
+            cliente = controller.selecionar(cliente);
+            //VALIDAR SE OBJETO FORNECEDOR FOI ENCONTRADO... 
+            if(cliente == null)
+                JOptionPane.showMessageDialog(this, "Produto não encontrado!"
+                    , "Retorno BD", JOptionPane.ERROR_MESSAGE);
+            else{
+                //PREENCHER OS CAMPOS...
+                jtxNome.setText(cliente.getNome());
+                jtxNumMesa.setText(String.valueOf(cliente.getNumMesa()));
+                jtxCodCliente.setText(String.valueOf(cliente.getCodCliente()));
+                jbNovo.setEnabled(false);
+                jbSalvar.setEnabled(false);
+                jbEditar.setEnabled(true);
+                jbExcluir.setEnabled(true);
+                jtxCodCliente.setEditable(false);
+                jtxNumMesa.setEditable(true);
+                jtxNome.setEditable(true);
+            }
+        }
+    }//GEN-LAST:event_jbPesquisarActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    
+    private void preencherTabela(){
+        ClienteController controller = new ClienteController();
+        ArrayList<ClienteModel> lista = controller.selecionarTodos();
+        DefaultTableModel modeloTabela = (DefaultTableModel) jtCliente.getModel();
+        modeloTabela.setRowCount(0);
+        if(lista.isEmpty())
+            JOptionPane.showMessageDialog(this, "Nenhum Cliente cadastrado!"
+                    ,"Retorno Tela", JOptionPane.ERROR_MESSAGE);
+        else{
+            
+            for(ClienteModel f: lista){
+                modeloTabela.addRow(new String[]{
+                    String.valueOf(f.getCodCliente()),
+                    String.valueOf(f.getNome()),
+                    String.valueOf(f.getNumMesa())
+                });
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ClienteView().setVisible(true));
+    }
+    private void inicializa(){
+        jtxCodCliente.setEditable(true);
+        jtxNumMesa.setEditable(false);
+        jtxNome.setEditable(false);
+        jbSalvar.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbPesquisar.setEnabled(true);
+        jbNovo.setEnabled(true);
+    }
+    private void limparCampos(){
+        jtxNome.setText("");
+        jtxCodCliente.setText("");
+        jtxNumMesa.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

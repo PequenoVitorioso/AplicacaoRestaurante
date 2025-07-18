@@ -4,12 +4,19 @@
  */
 package view;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.*;
+import controller.*;
 /**
  *
  * @author pichau
  */
 public class RefeicaoView extends javax.swing.JFrame {
-    
+    private ArrayList<MateriaPrimaModel> ListaMateriaPrima;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RefeicaoView.class.getName());
 
     /**
@@ -17,6 +24,9 @@ public class RefeicaoView extends javax.swing.JFrame {
      */
     public RefeicaoView() {
         initComponents();
+        preencherCombo();
+        inicializa();
+        limparCampos();
     }
 
     /**
@@ -38,9 +48,7 @@ public class RefeicaoView extends javax.swing.JFrame {
         jlValor = new javax.swing.JLabel();
         jtxCodigo = new javax.swing.JTextField();
         jtxNome = new javax.swing.JTextField();
-        jtxValor = new javax.swing.JTextField();
         jlMateriaPrima = new javax.swing.JLabel();
-        jcbMateriaPrima = new javax.swing.JComboBox<>();
         jbAdicionar = new javax.swing.JButton();
         jbPesquisar = new javax.swing.JButton();
         jbNovo = new javax.swing.JButton();
@@ -48,6 +56,8 @@ public class RefeicaoView extends javax.swing.JFrame {
         jbEditar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
         jbFechar = new javax.swing.JButton();
+        jtxValor = new javax.swing.JTextField();
+        jcbMateriaPrima = new javax.swing.JComboBox<>();
 
         button1.setLabel("button1");
 
@@ -68,13 +78,10 @@ public class RefeicaoView extends javax.swing.JFrame {
 
         jtRefeicao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Código", "Nome", "Valor", "Matéria Prima"
+                "Codigo Matéria Prima", "Matéria Prima"
             }
         ));
         jScrollPane1.setViewportView(jtRefeicao);
@@ -85,34 +92,41 @@ public class RefeicaoView extends javax.swing.JFrame {
 
         jlValor.setText("Valor:");
 
-        jtxValor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxValorActionPerformed(evt);
-            }
-        });
-
         jlMateriaPrima.setText("Matéria Prima:");
 
-        jcbMateriaPrima.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " ", " " }));
-        jcbMateriaPrima.addActionListener(new java.awt.event.ActionListener() {
+        jbAdicionar.setText("Adicionar");
+        jbAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbMateriaPrimaActionPerformed(evt);
+                jbAdicionarActionPerformed(evt);
             }
         });
-
-        jbAdicionar.setText("Adicionar");
 
         jbPesquisar.setText("Pesquisar");
 
         jbNovo.setText("Novo");
+        jbNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNovoActionPerformed(evt);
+            }
+        });
 
         jbSalvar.setText("Salvar");
+        jbSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalvarActionPerformed(evt);
+            }
+        });
 
         jbEditar.setText("Editar");
 
         jbExcluir.setText("Excluir");
 
         jbFechar.setText("Fechar");
+        jbFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbFecharActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpRefeicaoLayout = new javax.swing.GroupLayout(jpRefeicao);
         jpRefeicao.setLayout(jpRefeicaoLayout);
@@ -122,46 +136,44 @@ public class RefeicaoView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jpRefeicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpRefeicaoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbNovo)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbSalvar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbExcluir)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbFechar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jpRefeicaoLayout.createSequentialGroup()
+                        .addGroup(jpRefeicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlCodigo)
+                            .addComponent(jlNome)
+                            .addComponent(jlValor))
+                        .addGap(18, 18, 18)
                         .addGroup(jpRefeicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpRefeicaoLayout.createSequentialGroup()
-                                .addComponent(jbNovo)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbSalvar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbEditar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbExcluir)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbFechar)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(jtxNome)
+                                .addGap(206, 206, 206))
                             .addGroup(jpRefeicaoLayout.createSequentialGroup()
                                 .addGroup(jpRefeicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlCodigo)
-                                    .addComponent(jlNome)
-                                    .addComponent(jlValor))
-                                .addGap(18, 18, 18)
-                                .addGroup(jpRefeicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jpRefeicaoLayout.createSequentialGroup()
-                                        .addComponent(jtxNome)
-                                        .addGap(206, 206, 206))
-                                    .addGroup(jpRefeicaoLayout.createSequentialGroup()
-                                        .addGroup(jpRefeicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jpRefeicaoLayout.createSequentialGroup()
-                                                .addComponent(jtxCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jbPesquisar))
-                                            .addComponent(jtxValor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))))
+                                        .addComponent(jtxCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jbPesquisar))
+                                    .addComponent(jtxValor, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jpRefeicaoLayout.createSequentialGroup()
+                        .addGroup(jpRefeicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpRefeicaoLayout.createSequentialGroup()
                                 .addComponent(jlMateriaPrima)
-                                .addGap(18, 18, 18)
-                                .addComponent(jcbMateriaPrima, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jcbMateriaPrima, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
                                 .addComponent(jbAdicionar)
-                                .addContainerGap())))
-                    .addGroup(jpRefeicaoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         jpRefeicaoLayout.setVerticalGroup(
@@ -177,14 +189,15 @@ public class RefeicaoView extends javax.swing.JFrame {
                     .addComponent(jlNome)
                     .addComponent(jtxNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jpRefeicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpRefeicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlValor)
                     .addComponent(jtxValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jpRefeicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbAdicionar)
-                    .addComponent(jlMateriaPrima)
-                    .addComponent(jcbMateriaPrima, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpRefeicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jlMateriaPrima)
+                        .addComponent(jcbMateriaPrima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jpRefeicaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbNovo)
@@ -222,38 +235,85 @@ public class RefeicaoView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtxValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxValorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtxValorActionPerformed
+    private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
+        jbPesquisar.setEnabled(false);
+        jbNovo.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbSalvar.setEnabled(true);
+        jtxCodigo.setEditable(false);
+        jtxNome.setEditable(true);
+        jtxValor.setEditable(true);
+    }//GEN-LAST:event_jbNovoActionPerformed
 
-    private void jcbMateriaPrimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMateriaPrimaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcbMateriaPrimaActionPerformed
+    private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        RefeicaoModel refeicao = new RefeicaoModel();
+        refeicao.setNome(jtxNome.getText());
+        refeicao.setValor(Float.parseFloat(jtxValor.getText()));
+        
+        RefeicaoController controller = new RefeicaoController();
+        controller.inserir(refeicao);
+        int codigoRefeicao = controller.selecionarUltimoId();
+        
+        IngredientesController controllerIngredientes = new IngredientesController();
+        for(int i=0; i< jtRefeicao.getRowCount();i++){
+            IngredientesModel IM = new IngredientesModel();
+            IM.getRefeicao().setIdRefeicao(codigoRefeicao);
+            IM.getMateriaPrima().setIdMateriaPrima(Integer.parseInt(jtRefeicao.getValueAt(i, 0).toString()));
+            controllerIngredientes.inserir(IM);
+            }
+        
+        JOptionPane.showMessageDialog(this, "Refeição cadastrada com sucesso!");
+        preencherCombo();
+        inicializa();
+        limparCampos();
+    }//GEN-LAST:event_jbSalvarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+    private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_jbFecharActionPerformed
+
+    private void jbAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdicionarActionPerformed
+        String prod = (String)jcbMateriaPrima.getSelectedItem();
+            int idMateriaPrima = 0;
+            for(int i=0; i<ListaMateriaPrima.size();i++){
+                if(prod.equals(ListaMateriaPrima.get(i).getNome())){
+                    idMateriaPrima = ListaMateriaPrima.get(i).getIdMateriaPrima();
                     break;
                 }
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+          
+        //String quantidade = jtxQuantidade.getText();
+        DefaultTableModel modelo = (DefaultTableModel) jtRefeicao.getModel();
+        modelo.addRow(new String[]{String.valueOf(idMateriaPrima), prod});
+        //jtxQuantidade.setText("");
+        jcbMateriaPrima.setSelectedIndex(0);
+    }//GEN-LAST:event_jbAdicionarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new RefeicaoView().setVisible(true));
+    private void preencherCombo(){
+        MateriaPrimaController controller = new MateriaPrimaController();
+         ListaMateriaPrima = controller.selecionarTodos();
+        for(MateriaPrimaModel p: ListaMateriaPrima)
+            jcbMateriaPrima.addItem(p.getNome());
     }
+    private void inicializa(){
+        jtxNome.setEditable(false);
+        jtxValor.setEditable(false);
+        jbSalvar.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbPesquisar.setEnabled(true);
+        jbNovo.setEnabled(true);
+    }
+    private void limparCampos(){
+        jtxNome.setText("");
+        jtxValor.setText("");
+    }
+
+    
+    /**
+     * @param args the command line arguments
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;

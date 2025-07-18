@@ -25,6 +25,7 @@ public class PedidoController {
             sentenca.setInt(1, pedido.getHora());
             sentenca.setInt(2, pedido.getCodCliente().getCodCliente());
             //EXECUTAR SENTENCA
+            
             if (!sentenca.execute()) {
                 retorno = true;
             }

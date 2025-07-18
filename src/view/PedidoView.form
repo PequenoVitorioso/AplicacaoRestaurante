@@ -77,8 +77,8 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="18" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jbSalvarPedido" min="-2" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="452" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
@@ -90,14 +90,21 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jlNumMesa" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jlCódigo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jlHora" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jlCódigo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jlHora" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="jlNumMesa" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="jtxCodigo" alignment="0" pref="80" max="32767" attributes="0"/>
-                                      <Component id="jtxNumMesa" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jtxCodCliente" alignment="0" max="32767" attributes="0"/>
                                       <Component id="jtxHora" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -105,17 +112,23 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
+                                  <Component id="jbPesquisar" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="jbFechar" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
                                   <Component id="jlQuantidade" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jtxQuantidade" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jtxQuantidade" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   <Component id="jbAdicionar" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jbPesquisar" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -127,24 +140,33 @@
                       <Component id="jlCódigo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jtxCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbPesquisar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jbFechar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jlNumMesa" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jtxNumMesa" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jtxCodCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jlHora" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jtxHora" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jlHora" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jtxHora" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="19" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jbAdicionar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="18" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jlRefeicao" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jcbRefeicao" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jlQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jtxQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jbAdicionar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="122" max="-2" attributes="0"/>
@@ -166,8 +188,8 @@
             <Component class="javax.swing.JTable" name="jtPedido">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="3" rowCount="4">
-                    <Column editable="true" title="N&#xfa;mero da Mesa" type="java.lang.Object"/>
+                  <Table columnCount="3" rowCount="0">
+                    <Column editable="true" title="Codigo do Cliente" type="java.lang.Object"/>
                     <Column editable="true" title="Refei&#xe7;&#xe3;o" type="java.lang.Object"/>
                     <Column editable="true" title="Quantidade" type="java.lang.Object"/>
                   </Table>
@@ -202,6 +224,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Salvar Pedido"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbSalvarPedidoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jlC&#xf3;digo">
           <Properties>
@@ -210,7 +235,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jlNumMesa">
           <Properties>
-            <Property name="text" type="java.lang.String" value="N&#xfa;mero da Mesa:"/>
+            <Property name="text" type="java.lang.String" value="Codigo do Cliente"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlHora">
@@ -218,7 +243,7 @@
             <Property name="text" type="java.lang.String" value="Hora:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jtxNumMesa">
+        <Component class="javax.swing.JTextField" name="jtxCodCliente">
         </Component>
         <Component class="javax.swing.JTextField" name="jtxCodigo">
         </Component>
@@ -232,11 +257,7 @@
         <Component class="javax.swing.JComboBox" name="jcbRefeicao">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value=" "/>
-                <StringItem index="1" value=" "/>
-                <StringItem index="2" value=" "/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -254,11 +275,22 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Adicionar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbAdicionarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jbPesquisar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Pesquisar"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jbFechar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Fechar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbFecharActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

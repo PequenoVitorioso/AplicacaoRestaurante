@@ -17,12 +17,13 @@ public class ComandaController {
         Conexao c = new Conexao();
         c.conectar();
         //CRIAR SQL INSERT
-        String sql = "insert into comanda (refeicao, pedido) values (?,?)";
+        String sql = "insert into comanda (refeicao, pedido, quantidade) values (?,?,?)";
         try {
             PreparedStatement sentenca = c.conector.prepareStatement(sql);
             //PASSAR PARAMETROS
             sentenca.setInt(1, comanda.getRefeicao().getIdRefeicao());
             sentenca.setInt(2, comanda.getPedido().getIdPedido());
+            sentenca.setInt(3, comanda.getQuantidade());
             //EXECUTAR SENTENCA
             if (!sentenca.execute()) {
                 retorno = true;
